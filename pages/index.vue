@@ -21,22 +21,22 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
-import Item from "@/components/item.vue";
-import { isServer, toNumber, getQueryString, debounce } from "@/utils";
+import { mapState, mapMutations, mapActions } from "vuex"
+import Item from "@/components/item.vue"
+import { isServer, toNumber, getQueryString, debounce } from "@/utils"
 
 export default {
   components: {
     Item,
   },
   data() {
-    return {};
+    return {}
   },
   async fetch({ app }) {
-    await app.store.dispatch("user/getUserInfo");
+    await app.store.dispatch("user/getUserInfo")
     return await app.store.dispatch("blog/getIssueList", {
       page: 1,
-    });
+    })
   },
   computed: {
     ...mapState({
@@ -49,10 +49,10 @@ export default {
     }),
     pageNum: {
       get() {
-        return toNumber(this.page);
+        return toNumber(this.page)
       },
       set(val) {
-        return toNumber(val);
+        return toNumber(val)
       },
     },
   },
@@ -60,31 +60,31 @@ export default {
     $route() {
       // 标签分类
       if (this.$route.query.page) {
-        this.getIssueList({ page: toNumber(this.$route.query.page) });
+        this.getIssueList({ page: toNumber(this.$route.query.page) })
       }
     },
     keyWorld(newVal) {
-      this.debouncedCallback(newVal);
+      this.debouncedCallback(newVal)
     },
   },
   created() {
     this.debouncedCallback = debounce((...args) => {
       if (getQueryString("page")) {
-        this.updatePage(1);
-        this.$router.push(`/`);
+        this.updatePage(1)
+        this.$router.push(`/`)
       }
-      this.getIssueList({ page: toNumber(this.page) });
-    }, 500);
+      this.getIssueList({ page: toNumber(this.page) })
+    }, 500)
   },
   beforeMount() {
-    let page = !isServer() ? getQueryString("page") : "";
+    let page = !isServer() ? getQueryString("page") : ""
     if (page) {
-      this.updatePage(page);
+      this.updatePage(page)
     }
     if (!this.serverLoaded || page) {
-      this.getIssueList({ page: toNumber(this.page) });
+      this.getIssueList({ page: toNumber(this.page) })
     } else {
-      console.log("首屏数据在服务端加载好了！");
+      console.log("首屏数据在服务端加载好了！")
     }
   },
   methods: {
@@ -95,11 +95,11 @@ export default {
       updatePage: "blog/updatePage",
     }),
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.$router.push(`/?page=${val}`);
+      console.log(`当前页: ${val}`)
+      this.$router.push(`/?page=${val}`)
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .paginate-container {

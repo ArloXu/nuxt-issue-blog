@@ -29,7 +29,7 @@ if [[ $1 == "deploy" ]]; then
     # git push -f git@github.com:<userName>/<userName>.github.io.git master
 
     # 如果发布到 https://<userName>.github.io/<REPO>
-    git push -f https://github.com/yanyue404/blog.git master:gh-pages
+    git push -f https://github.com/ArloXu/blog.git master:gh-pages
 
     cd -
     exit
